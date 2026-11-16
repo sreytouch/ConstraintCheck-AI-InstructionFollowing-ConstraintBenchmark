@@ -2,7 +2,7 @@
 
 **Good answers follow every requirement.** A beginner-friendly portfolio application for evaluating instruction following, collecting human feedback, diagnosing failures, and comparing prompting strategies on new tasks.
 
-![ConstraintCheck application overview](docs/images/application-overview.png)
+![ConstraintCheck application overview](docs/images/check.png)
 
 *AI-generated illustration of the workflow, not a screenshot or measured benchmark result. The [image prompts](docs/image-generation.md) are included.*
 
