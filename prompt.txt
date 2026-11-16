@@ -1,0 +1,833 @@
+Build a complete beginner-friendly portfolio project called AI Constraint Following Benchmark.
+
+Goal
+
+Create an AI evaluation system that tests whether language models correctly follow prompts containing multiple instructions and constraints.
+
+The project should demonstrate:
+
+* instruction following
+* constraint satisfaction
+* human evaluation
+* model comparison
+* AI benchmarking
+* preference data
+* failure analysis
+* reward-model concepts
+* iterative improvement
+* held-out evaluation
+* reward hacking
+
+The application should generate tasks containing multiple requirements, evaluate model responses against those requirements, identify exactly which constraints were violated, and calculate an overall instruction-following score.
+
+Technology Stack
+
+Use:
+
+* Python
+* Streamlit
+* OpenAI API
+* Pandas
+* SQLite
+* Matplotlib
+* scikit-learn where useful
+* python-dotenv
+* pytest
+
+Keep the system educational and portfolio-friendly.
+
+Core Concept
+
+Consider this prompt:
+
+“Explain photosynthesis to a 10-year-old.
+
+Requirements:
+
+* use fewer than 80 words
+* include one analogy
+* do not use the word chlorophyll
+* end with a question”
+
+A response can be factually correct but still fail the task if it violates one of the explicit constraints.
+
+The project should measure whether the AI satisfies all requested conditions.
+
+Main Workflow
+
+1. User selects or creates an evaluation task.
+2. Task contains:
+    * main request
+    * multiple constraints
+3. AI generates a response.
+4. Application displays each constraint as a checklist.
+5. Human evaluator determines which requirements were satisfied.
+6. Application calculates compliance score.
+7. Human provides rationale.
+8. Evaluation is saved.
+9. Analytics show common failure patterns.
+10. Baseline and improved prompting strategies are compared.
+
+Built-In Evaluation Tasks
+
+Create at least 20 built-in tasks across different categories.
+
+Task 1
+
+Prompt:
+
+Explain gravity to a 7-year-old.
+
+Constraints:
+
+* maximum 3 sentences
+* avoid mathematical formulas
+* include one everyday example
+* do not use the phrase “spacetime”
+
+Task 2
+
+Prompt:
+
+Write a professional reminder email.
+
+Constraints:
+
+* maximum 100 words
+* polite tone
+* mention Friday as the deadline
+* do not apologize
+* include a clear call to action
+
+Task 3
+
+Prompt:
+
+Summarize a paragraph.
+
+Constraints:
+
+* exactly 2 sentences
+* maximum 60 words
+* preserve the main conclusion
+* do not introduce new facts
+
+Task 4
+
+Prompt:
+
+Explain machine learning.
+
+Constraints:
+
+* audience is a high-school student
+* maximum 120 words
+* include one analogy
+* avoid the terms neural network and gradient descent
+
+Task 5
+
+Prompt:
+
+Rewrite:
+
+“You failed to send the document.”
+
+Constraints:
+
+* professional tone
+* non-accusatory
+* preserve meaning
+* under 25 words
+
+Task 6
+
+Prompt:
+
+Give three study tips.
+
+Constraints:
+
+* exactly 3 bullet points
+* each bullet under 20 words
+* no motivational clichés
+* include one tip about scheduling
+
+Task 7
+
+Prompt:
+
+Write a product description for a reusable water bottle.
+
+Constraints:
+
+* maximum 70 words
+* mention stainless steel
+* do not claim health benefits
+* use no exclamation marks
+* professional tone
+
+Task 8
+
+Prompt:
+
+Explain why exercise is useful.
+
+Constraints:
+
+* do not provide medical advice
+* maximum 80 words
+* mention both physical activity and mood
+* include no numerical claims
+
+Add additional tasks involving:
+
+* exact word counts
+* exact sentence counts
+* prohibited words
+* required phrases
+* audience requirements
+* formatting requirements
+* tone
+* factual restrictions
+* ordering
+* output structure
+
+Constraint Types
+
+Support these constraint categories:
+
+* maximum word count
+* minimum word count
+* exact number of sentences
+* exact number of bullets
+* required phrase
+* prohibited phrase
+* required concept
+* prohibited concept
+* tone
+* audience
+* format
+* information preservation
+* no unsupported information
+* output ordering
+
+Custom Task Builder
+
+Allow users to create their own evaluation tasks.
+
+Fields:
+
+Main Request
+
+Constraint 1
+
+Constraint 2
+
+Constraint 3
+
+Constraint 4
+
+Constraint 5
+
+Allow more constraints if practical.
+
+Generation Strategies
+
+Implement two strategies.
+
+Baseline
+
+Simple prompt containing the task.
+
+Improved Constraint-Aware Strategy
+
+Use a system instruction such as:
+
+“You must satisfy every requirement in the user’s request.
+
+Before answering:
+
+1. Identify each explicit requirement.
+2. Draft the answer.
+3. Check the draft against every requirement.
+4. Revise any violation.
+5. Return only the final answer.
+
+Do not mention your internal checklist.”
+
+Allow comparing both strategies.
+
+Evaluation Interface
+
+Display:
+
+Prompt
+
+Response
+
+Then show every constraint individually.
+
+For each constraint, evaluator chooses:
+
+* Pass
+* Fail
+* Not Applicable
+
+Provide optional notes.
+
+Calculate:
+
+Constraint Compliance Score
+
+Example:
+
+4 passed out of 5 applicable constraints
+
+80% compliance.
+
+Also ask evaluator to score:
+
+* Correctness: 1–5
+* Relevance: 1–5
+* Clarity: 1–5
+* Overall Quality: 1–5
+
+Ask:
+
+Would you accept this response?
+
+* Yes
+* No
+
+Ask for rationale.
+
+Automatic Checks
+
+Where practical, automatically evaluate deterministic constraints.
+
+Examples:
+
+* word count
+* sentence count
+* bullet count
+* presence of required words
+* absence of prohibited words
+
+Mark these as:
+
+Automatically Checked
+
+For subjective constraints such as:
+
+* professional tone
+* age appropriateness
+* meaning preservation
+
+require human evaluation.
+
+Clearly separate automatic checks from human judgments.
+
+Database
+
+Use SQLite.
+
+Store:
+
+* evaluation_id
+* timestamp
+* task_name
+* main_request
+* constraints
+* response
+* generation_strategy
+* automatic_results
+* human_results
+* compliance_score
+* correctness
+* relevance
+* clarity
+* overall_quality
+* accepted
+* rationale
+
+Design relational tables if useful.
+
+For example:
+
+evaluations
+
+constraints
+
+constraint_results
+
+Use a clean schema.
+
+Streamlit Pages
+
+Home
+
+Explain why instruction following matters.
+
+Explain:
+
+A response can sound good and still fail if it ignores explicit requirements.
+
+Show workflow:
+
+Prompt
+↓
+Requirements
+↓
+Model Response
+↓
+Constraint Checks
+↓
+Human Evaluation
+↓
+Failure Analysis
+↓
+Improve Strategy
+
+Benchmark
+
+Let users select a built-in task.
+
+Generate response.
+
+Show automatic checks.
+
+Allow human checks.
+
+Save evaluation.
+
+Custom Task Builder
+
+Allow users to enter a custom task and constraints.
+
+Generate a response.
+
+Evaluate it.
+
+Save results.
+
+Side-by-Side Comparison
+
+Run:
+
+Baseline Strategy
+
+and
+
+Constraint-Aware Strategy
+
+on the same task.
+
+Display both responses side by side.
+
+Show compliance score for each.
+
+Ask which response is better.
+
+Save preference.
+
+Dataset
+
+Show all evaluations.
+
+Filter by:
+
+* task
+* strategy
+* compliance score
+* accepted/rejected
+* violated constraint type
+
+Allow CSV export.
+
+Analytics
+
+Show:
+
+* total evaluations
+* average compliance score
+* acceptance rate
+* baseline compliance score
+* improved strategy compliance score
+* most frequently violated constraint type
+* average number of failed constraints per response
+
+Create charts:
+
+* compliance score by strategy
+* most common constraint violations
+* acceptance rate
+* compliance trend over time
+* performance by constraint category
+
+Use Matplotlib only.
+
+Failure Analysis
+
+Create a page that categorizes errors.
+
+Categories:
+
+* word-count violation
+* formatting violation
+* required-content omission
+* prohibited-content inclusion
+* tone failure
+* audience mismatch
+* meaning changed
+* unsupported information
+* partial instruction following
+
+Show examples from the saved dataset.
+
+Display the most common failure mode.
+
+Constraint Difficulty
+
+Calculate which types of constraints the model struggles with most.
+
+For each constraint category show:
+
+* number evaluated
+* number passed
+* number failed
+* pass rate
+
+Sort from lowest pass rate to highest.
+
+Explain that this helps identify specific model weaknesses.
+
+Improvement Experiment
+
+Compare:
+
+Baseline Prompting
+
+vs
+
+Constraint-Aware Prompting
+
+Use held-out tasks.
+
+Track:
+
+* average compliance
+* acceptance rate
+* number of full-pass responses
+* average quality score
+
+Explain that improvement should be evaluated on new tasks rather than only tasks used to design the improved prompt.
+
+Held-Out Benchmark
+
+Create at least 10 additional tasks that are not visible in the regular benchmark.
+
+Use them for testing.
+
+Examples should combine 3–6 constraints each.
+
+Run both generation strategies.
+
+Ask evaluator to judge both.
+
+Show:
+
+Baseline full-compliance rate
+
+Improved full-compliance rate
+
+Average constraint compliance
+
+Acceptance rate
+
+Preference Model Demo
+
+Using comparison data, create a simple preference-model approximation.
+
+Features could include:
+
+* compliance score
+* correctness
+* relevance
+* clarity
+* overall quality
+* number of failed constraints
+
+Train logistic regression to predict which response humans prefer.
+
+Exclude ties if supported.
+
+Show:
+
+* number of training examples
+* accuracy
+* coefficients
+* interpretation
+
+Clearly state that this is an educational approximation.
+
+Reward Hacking Demonstration
+
+Create an example showing how optimizing only one score can hurt overall performance.
+
+Prompt:
+
+“Explain gravity to a child in under 50 words.”
+
+Suppose the reward strongly favors detailed scientific explanations.
+
+Response A:
+
+A detailed 200-word technically accurate explanation.
+
+Response B:
+
+A simple 40-word child-friendly explanation.
+
+A reward based mainly on technical detail might favor Response A even though it violates the user’s request.
+
+Explain:
+
+Higher reward does not automatically mean better task completion.
+
+Show how a better evaluation should include:
+
+* instruction following
+* length compliance
+* audience
+* correctness
+
+Concepts Page
+
+Explain:
+
+* prompts
+* requests
+* constraints
+* instruction following
+* evaluation rubric
+* human feedback
+* preference data
+* reward signal
+* reward model
+* reward hacking
+* held-out evaluation
+* hill climbing
+* iterative improvement
+* RLHF
+
+Relate the concepts directly to the benchmark.
+
+Suggested Project Structure
+
+ai-constraint-benchmark/
+
+app.py
+
+pages/
+1_Benchmark.py
+2_Custom_Task.py
+3_Compare_Strategies.py
+4_Dataset.py
+5_Analytics.py
+6_Failure_Analysis.py
+7_Constraint_Difficulty.py
+8_Held_Out_Test.py
+9_Preference_Model.py
+10_Reward_Hacking.py
+11_Concepts.py
+
+src/
+init.py
+openai_client.py
+database.py
+task_library.py
+constraint_checker.py
+evaluation.py
+analytics.py
+preference_model.py
+
+data/
+.gitkeep
+
+tests/
+test_database.py
+test_constraint_checker.py
+test_evaluation.py
+test_task_library.py
+
+README.md
+requirements.txt
+.env.example
+.gitignore
+
+Constraint Checker
+
+Implement reusable functions such as:
+
+count_words()
+
+count_sentences()
+
+check_required_phrase()
+
+check_prohibited_phrase()
+
+check_bullet_count()
+
+check_word_limit()
+
+check_sentence_limit()
+
+check_exact_word_count() where appropriate
+
+Do not try to automatically score subjective characteristics such as politeness unless clearly labeled as heuristic.
+
+Human judgment should remain authoritative for subjective constraints.
+
+Environment Variables
+
+Use:
+
+OPENAI_API_KEY=
+
+OPENAI_MODEL=
+
+Load them through python-dotenv.
+
+Do not hardcode keys.
+
+Create .env.example.
+
+Add .env to .gitignore.
+
+Error Handling
+
+Handle:
+
+* missing API key
+* incomplete custom task
+* missing constraints
+* API errors
+* database errors
+* malformed saved records
+* insufficient data for preference-model training
+
+Show friendly Streamlit messages.
+
+README
+
+Create a professional README containing:
+
+1. Overview
+2. Problem statement
+3. Why constraint following matters
+4. Features
+5. Architecture
+6. Technology stack
+7. Installation
+8. Environment setup
+9. Running the project
+10. Benchmark methodology
+11. Automatic vs human evaluation
+12. Compliance scoring
+13. Improvement experiment
+14. Held-out testing
+15. Preference-model demo
+16. Reward hacking example
+17. Limitations
+18. Future improvements
+
+Installation:
+
+python -m venv venv
+
+macOS/Linux:
+
+source venv/bin/activate
+
+Windows:
+
+venv\Scripts\activate
+
+pip install -r requirements.txt
+
+Run:
+
+streamlit run app.py
+
+Testing
+
+Write tests for:
+
+* word-count checker
+* sentence-count checker
+* required phrases
+* prohibited phrases
+* bullet-count checker
+* compliance-score calculation
+* database initialization
+* evaluation storage
+* task retrieval
+
+Tests must not require a live OpenAI API call.
+
+Code Quality
+
+Use:
+
+* type hints
+* modular functions
+* docstrings
+* clear naming
+* reusable constraint-checking logic
+* separation between UI and application logic
+
+Avoid unnecessary complexity.
+
+Do not leave TODO placeholders.
+
+Portfolio Presentation
+
+Make the app clean and professional.
+
+A reviewer should be able to understand within a few minutes that the project demonstrates:
+
+* AI evaluation
+* human feedback
+* prompt adherence
+* systematic failure analysis
+* model comparison
+* iterative improvement
+
+Final Verification
+
+Before finishing:
+
+1. Inspect every file.
+2. Check imports.
+3. Run all tests.
+4. Fix failing tests.
+5. Verify Streamlit launches.
+6. Verify automatic constraint checks.
+7. Verify SQLite initialization.
+8. Verify CSV export.
+9. Verify comparison mode.
+10. Verify held-out benchmark.
+11. Ensure README instructions match the implementation.
+
+At the end provide:
+
+* summary of what was built
+* complete directory tree
+* installation commands
+* run commands
+* environment setup
+* architecture explanation
+* limitations
+* recommended next improvements
